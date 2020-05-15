@@ -1,2 +1,2 @@
-web: npm tsc
-npm start
+Build: npm tsc
+web: npm start
