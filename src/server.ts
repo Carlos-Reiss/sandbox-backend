@@ -1,11 +1,26 @@
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
+
+import Socket from 'socket.io';
+import { createServer } from 'http';
+import cors from 'cors';
+
 import uploadConfig from './config/multer';
 import AppError from './errors/AppError';
 import connect from './connect';
 import Routes from './routes';
 
 const app = express();
+app.use(cors());
+// socket.io
+const server = createServer(app);
+const io = Socket(server);
+
+io.on('connection', socket => {
+  socket.on('connectRoon', box => {
+    socket.join(box);
+  });
+});
 
 app.use(express.json());
 // uploads de arquivos
@@ -16,6 +31,12 @@ const db =
 
 connect(db);
 app.use('/files', express.static(uploadConfig.directory));
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  req.io = io;
+
+  return next();
+});
 // minhas rotas
 app.use(Routes);
 
@@ -31,6 +52,6 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
 
 export const PORT = 3333;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server Running...${PORT}`);
 });

@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { Document } from 'mongoose';
 import File from '../models/File';
 import Box from '../models/Box';
@@ -13,17 +14,25 @@ interface MulterProps {
   filename: string;
 }
 
-interface Request {
+interface FileBoxesInterface {
   boxID: string;
   arquivos: MulterProps;
+  req: Request;
 }
 
 class FileBoxesService {
-  public async execute({ boxID, arquivos }: Request): Promise<FileInterface> {
+  public async execute({
+    boxID,
+    arquivos,
+    req,
+  }: FileBoxesInterface): Promise<FileInterface> {
     const box = await Box.findById(boxID);
 
     if (!box) {
-      throw new AppError('Box is not exist');
+      throw new AppError(
+        'the box does not exist create first to add a file',
+        400
+      );
     }
     const file = await File.create({
       title: arquivos.originalname,
@@ -35,6 +44,8 @@ class FileBoxesService {
     boxFiles.push(file);
 
     await box.save();
+
+    req.io.sockets.in(box._id).emit('file', file);
 
     return file;
   }
