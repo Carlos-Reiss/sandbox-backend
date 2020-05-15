@@ -26,7 +26,7 @@ class DeleteFileinBoxService {
       );
     }
 
-    await File.findByIdAndDelete(file._id);
+    await File.deleteOne(file._id);
   }
 }
 
