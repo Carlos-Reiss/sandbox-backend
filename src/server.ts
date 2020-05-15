@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
+import uploadConfig from './config/multer';
 import AppError from './errors/AppError';
 import connect from './connect';
 import Routes from './routes';
@@ -14,7 +15,7 @@ const db =
   'mongodb+srv://omnistack:omnistack@cluster0-si4dk.mongodb.net/sandbox?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true';
 
 connect(db);
-
+app.use('/files', express.static(uploadConfig.directory));
 // minhas rotas
 app.use(Routes);
 
@@ -28,7 +29,7 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
   return res.status(500).json({ status: 'error', message: err.message });
 });
 
-const PORT = 3331;
+export const PORT = 3333;
 
 app.listen(PORT, () => {
   console.log(`Server Running...${PORT}`);
