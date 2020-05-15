@@ -6,7 +6,7 @@ interface FileInterface extends Document {
   path: string;
 }
 
-const File = new mongoose.Schema(
+const File = new mongoose.Schema<FileInterface>(
   {
     title: {
       type: String,
@@ -24,7 +24,7 @@ const File = new mongoose.Schema(
   }
 );
 
-File.virtual('url').get(function () {
+File.virtual('url').get(function (this: FileInterface) {
   const url = process.env.URL || `http://localhost:${PORT}`;
 
   return `${url}/files/${encodeURIComponent(this.path)}`;
