@@ -50,7 +50,7 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
   return res.status(500).json({ status: 'error', message: err.message });
 });
 
-export const PORT = 3333;
+export const PORT = process.env.PORT || 3333;
 
 server.listen(PORT, () => {
   console.log(`Server Running...${PORT}`);
