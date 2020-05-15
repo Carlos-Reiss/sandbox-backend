@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import app from './app.routes';
+import BoxRouter from './box.routes';
+import FileRouter from './file.routes';
 
 const routes = Router();
 
-routes.use('/', app);
+routes.use('/boxes', BoxRouter);
+routes.use('/files', FileRouter);
 
 export default routes;

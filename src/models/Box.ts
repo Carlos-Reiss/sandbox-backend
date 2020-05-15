@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 interface BoxInterface extends Document {
   title: string;

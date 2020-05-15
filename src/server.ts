@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // connect database
 const db =
-  'mongodb+srv://omnistack:omnistack@cluster0-si4dk.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true';
+  'mongodb+srv://omnistack:omnistack@cluster0-si4dk.mongodb.net/sandbox?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true';
 
 connect(db);
 
