@@ -5,7 +5,7 @@ interface FileInterface extends Document {
   path: string;
 }
 
-const File = new mongoose.Schema<FileInterface>(
+const File = new mongoose.Schema(
   {
     title: {
       type: String,

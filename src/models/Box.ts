@@ -5,7 +5,7 @@ interface BoxInterface extends Document {
   files: [];
 }
 
-const Box = new mongoose.Schema(
+const Box = new mongoose.Schema<BoxInterface>(
   {
     title: {
       type: String,
