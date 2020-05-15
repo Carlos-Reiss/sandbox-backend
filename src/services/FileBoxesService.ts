@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 import File from '../models/File';
 import Box from '../models/Box';
+import AppError from '../errors/AppError';
 
 interface FileInterface extends Document {
   title: string;
@@ -22,7 +23,7 @@ class FileBoxesService {
     const box = await Box.findById(boxID);
 
     if (!box) {
-      throw new Error('Box is not exist');
+      throw new AppError('Box is not exist');
     }
     const file = await File.create({
       title: arquivos.originalname,

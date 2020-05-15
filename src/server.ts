@@ -1,4 +1,6 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
+import 'express-async-errors';
+import AppError from './errors/AppError';
 import connect from './connect';
 import Routes from './routes';
 
@@ -15,6 +17,16 @@ connect(db);
 
 // minhas rotas
 app.use(Routes);
+
+app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
+  if (err instanceof AppError) {
+    return res
+      .status(err.statusCode)
+      .json({ status: 'Error', message: err.message });
+  }
+  console.log(err);
+  return res.status(500).json({ status: 'error', message: err.message });
+});
 
 const PORT = 3331;
 
