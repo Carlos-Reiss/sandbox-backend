@@ -13,8 +13,6 @@ class DeleteFileinBoxService {
 
     const file = await File.findById(idFile);
 
-    console.log(file);
-
     if (!box) {
       throw new AppError(
         'the box does not exist create first to add a file',
