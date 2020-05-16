@@ -32,7 +32,7 @@ FileRouter.delete('/:idFile/boxes/:idBox', async (req, res) => {
 
   await deleteFileinBoxService.execute({ idBox, idFile });
 
-  return res.status(20).send();
+  return res.status(200).send();
 });
 
 export default FileRouter;
