@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import Box from '../models/Box';
 import CreateBoxService from '../services/CreateBoxService';
 import DeleteBoxService from '../services/DeleteBoxService';
 import ListboxesServices from '../services/ListboxesServices';
@@ -25,6 +25,15 @@ BoxRouter.get('/:id', async (req, res) => {
   return res.json({ boxes });
 });
 
+BoxRouter.get('/', async (req, res) => {
+  const boxes = await Box.find().populate({
+    path: 'files',
+    options: { sort: { createdAt: -1 } },
+  });
+
+  return res.json({ boxes });
+});
+
 BoxRouter.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
@@ -32,7 +41,7 @@ BoxRouter.delete('/:id', async (req, res) => {
 
   await deleteBoxService.execute({ id });
 
-  return res.status(204).json({ ok: true });
+  return res.status(204);
 });
 
 export default BoxRouter;
