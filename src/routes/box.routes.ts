@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Box from '../models/Box';
+
 import CreateBoxService from '../services/CreateBoxService';
 import DeleteBoxService from '../services/DeleteBoxService';
 import ListboxesServices from '../services/ListboxesServices';

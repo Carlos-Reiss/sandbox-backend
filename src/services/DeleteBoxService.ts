@@ -16,7 +16,7 @@ class DeleteBoxService {
       );
     }
 
-    await Box.remove(boxSearch);
+    await Box.deleteOne(boxSearch);
   }
 }
 

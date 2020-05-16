@@ -9,9 +9,9 @@ interface Request {
 
 class DeleteFileinBoxService {
   public async execute({ idBox, idFile }: Request): Promise<void> {
-    const box = await Box.findById(idBox);
+    const box = await Box.findById({ _id: idBox });
 
-    const file = await File.findById(idFile);
+    const file = await File.findById({ _id: idFile });
 
     if (!box) {
       throw new AppError(
@@ -26,7 +26,8 @@ class DeleteFileinBoxService {
       );
     }
 
-    await File.deleteOne(file._id);
+    await File.findByIdAndDelete({ _id: idFile });
+    return;
   }
 }
 
